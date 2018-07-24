@@ -15,14 +15,14 @@ public class ProductoEntity {
     @GeneratedValue
     private Long idProducto;
 
-    @Column(name = "name")
-    private String name;
+    @Column(name = "idUsuario")
+    private Long idUsuario;
 
-    @Column(name = "price")
-    private Long price;
+    @Column(name = "nombre")
+    private String nombre;
 
-    @Column(name = "stock")
-    private String stock;
+    @Column(name = "codigo")
+    private String codigo;
 
 }
 

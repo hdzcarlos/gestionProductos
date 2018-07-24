@@ -1,18 +1,17 @@
 package per.chc.spring.gestionProductos.web.rest;
 
+import com.netflix.ribbon.proxy.annotation.Http;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import per.chc.spring.gestionProductos.repository.IProductoRepository;
 import per.chc.spring.gestionProductos.service.IProductoService;
 import per.chc.spring.gestionProductos.web.dto.ProductoDTO;
-@Slf4j
+
+import java.util.List;
+
 @RestController("/")
 public class ProductosResource {
 
@@ -27,13 +26,25 @@ public class ProductosResource {
     public ResponseEntity<String> status(){
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
-    @RequestMapping(value = "producto", method = RequestMethod.POST)
-    public ResponseEntity<Void> crearProducto(@RequestBody ProductoDTO productoDTO){
-    log.info("Este producto {}", productoDTO.toString());
-
-
-        return null;
-
+    @RequestMapping(value = "producto", method = RequestMethod.GET)
+    public ResponseEntity<List<ProductoDTO>> getAllProductos(){
+        List<ProductoDTO> productos = productoService.getAllProductos();
+        return ResponseEntity.ok(productos);
+    }
+    @RequestMapping(value = "producto/{idUsuario}", method = RequestMethod.GET)
+    public ResponseEntity<List<ProductoDTO>> getProductoByIdUsuario(@PathVariable Long idUsuario) {
+        List<ProductoDTO> productoByIdUsuario = productoService.getProductoByIdUsuario(idUsuario);
+        return ResponseEntity.ok(productoByIdUsuario);
+    }
+    @RequestMapping(value = "producto/{idUsuario}", method = RequestMethod.POST)
+    public ResponseEntity<Void> crearProductoParaUsuario(@RequestBody ProductoDTO productoDTO,
+                                                         @PathVariable Long idUsuario){
+        ProductoDTO dto = productoService.crearProductoByUsuario(idUsuario, productoDTO);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+    @RequestMapping(value = "producto/{idUsuario}", method = RequestMethod.DELETE)
+    public ResponseEntity<List<ProductoDTO>>EliminarProductoByIdUsuario(@PathVariable Long idUsuario){
+        List<ProductoDTO> productosEliminados = productoService.eliminarProductosByUsuario(idUsuario);
+        return ResponseEntity.ok(productosEliminados);
     }
 }

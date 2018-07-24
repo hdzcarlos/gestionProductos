@@ -9,11 +9,9 @@ public interface IProductoService {
      * Metodo para crear un producto en base de datos.
      * @param idProducto
      * @param name
-     * @param price
-     * @param stock
      * @return Un productoDTO
      */
-    ProductoDTO crearProducto(Long idProducto, String name, Long price, String stock);
+    ProductoDTO crearProducto(Long idProducto, String name, String codigo);
 
     /**
      * Metodo para almacenar en una lista todos los productos.
@@ -34,6 +32,30 @@ public interface IProductoService {
      * @return nos devuelve el producto por su id
      */
     ProductoDTO getProducto(Long idProducto);
+
+    /**
+     * Metodo para recuperar un producto indicando el usuario
+     * @param idUsuario
+     * @return
+     */
+
+    List<ProductoDTO> getProductoByIdUsuario(Long idUsuario);
+
+    /**
+     * Metodo para crear un producto indicando el usuario
+     * @param idUsuario
+     * @return
+     */
+
+    ProductoDTO crearProductoByUsuario(Long idUsuario, ProductoDTO producto);
+
+    /**
+     * Metodo para eliminar un producto indicando el usuario
+     * @param idUsuario
+     * @return
+     */
+
+    List<ProductoDTO> eliminarProductosByUsuario(Long idUsuario);
 
     /**
      * Metodo para actualizar un producto pasando el producto actualizado
